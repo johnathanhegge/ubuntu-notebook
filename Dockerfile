@@ -17,6 +17,9 @@ RUN apt-get -y update && \
 ADD help.html /etc/NAE/help.html
 ADD AppDef.json /etc/NAE/AppDef.json
 
+ADD https://raw.githubusercontent.com/nimbix/notebook-common/master/install-ubuntu.sh /tmp/install-ubuntu.sh
+RUN bash /tmp/install-ubuntu.sh && rm -f /tmp/install-ubuntu.sh
+
 # Expose port 22 for local JARVICE emulation in docker
 EXPOSE 22
 

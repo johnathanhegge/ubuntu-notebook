@@ -1,6 +1,6 @@
 {
-    "name": "Ubuntu Linux for Intel",
-    "description": "Ubuntu Linux for Intel",
+    "name": "Ubuntu Notebook",
+    "description": "Ubuntu Linux with Juptyer Notebook",
     "author": "Nimbix, Inc.",
     "licensed": true,
     "classifications": [
@@ -54,18 +54,23 @@
             "description": "Launch a session with all boot services, including SSH (if installed).  Connection address and credentials will appear in your web browser once available.",
             "parameters": {}
         },
-        "GUI": {
-            "path": "/usr/local/bin/nimbix_desktop",
+        "Notebook": {
+            "path": "/usr/local/bin/nimbix_notebook",
             "interactive": true,
-            "name": "GUI",
-            "description": "Run a GUI command, and connect interactively directly from your web browser (requires Nimbix Desktop in image).",
+            "name": "Jupyter Notebook",
+            "description": "Launch Jupyter Notebook directly",
             "parameters": {
-                "command": {
-                    "name": "Command",
-                    "description": "Command to run",
-                    "type": "STR",
-                    "positional": true,
-                    "required": true
+                "-s": {
+                    "name": "activation script",
+                    "description": "Notebook activation script",
+                    "type": "FILE",
+                    "required": false
+                },
+                "-r": {
+                    "name": "requirements.txt",
+                    "description": "pip requirements.txt file",
+                    "type": "FILE",
+                    "required": false
                 }
             }
         }

@@ -6,7 +6,7 @@ ARG SERIAL_NUMBER
 ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180403.1405}
 
 ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-master}
+ENV GIT_BRANCH ${GIT_BRANCH:-testing}
 
 RUN apt-get -y update && \
     apt-get -y install curl && \
@@ -17,7 +17,8 @@ RUN apt-get -y update && \
 ADD help.html /etc/NAE/help.html
 ADD AppDef.json /etc/NAE/AppDef.json
 
-ADD https://raw.githubusercontent.com/nimbix/notebook-common/$GIT_BRANCH/install-ubuntu.sh /tmp/install-ubuntu.sh
+ENV NB_BRANCH=testing
+ADD https://raw.githubusercontent.com/nimbix/notebook-common/$NB_BRANCH/install-ubuntu.sh /tmp/install-ubuntu.sh
 RUN bash /tmp/install-ubuntu.sh && rm -f /tmp/install-ubuntu.sh
 
 # Expose port 22 for local JARVICE emulation in docker

@@ -1,2 +1,2 @@
-# ubuntu-desktop
-Ubuntu Desktop (graphical) base Docker image for JARVICE
+# ubuntu-notebook
+Ubuntu Jupyter Notebook for JARVICE

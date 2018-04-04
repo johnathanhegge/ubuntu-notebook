@@ -1,18 +1,30 @@
-FROM nimbix/ubuntu-base:trusty
-MAINTAINER Nimbix, Inc.
+#FROM nimbix/ubuntu-base:trusty
+FROM ubuntu:trusty
+LABEL maintainer="Nimbix, Inc."
+
+# Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
+ARG SERIAL_NUMBER
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180124.1405}
+
+ARG GIT_BRANCH
+ENV GIT_BRANCH ${GIT_BRANCH:-testing}
 
 ENV DEBIAN_FRONTEND noninteractive
-ADD https://github.com/nimbix/image-common/archive/master.zip /tmp/nimbix.zip
-WORKDIR /tmp
-RUN apt-get update && apt-get -y install zip unzip && unzip nimbix.zip && rm -f nimbix.zip
 
-# Nimbix desktop (does an apt-get clean)
-RUN mkdir -p /usr/local/lib/nimbix_desktop && for i in help-tiger.html install-ubuntu-tiger.sh nimbix_desktop postinstall-tiger.sh url.txt xfce4-session-logout share skel.config; do cp -a /tmp/image-common-master/nimbix_desktop/$i /usr/local/lib/nimbix_desktop; done && cp -a /tmp/image-common-master/nimbix-desktop-upstart.conf /etc/init/nimbix-desktop.conf && rm -rf /tmp/image-common-master
-RUN /usr/local/lib/nimbix_desktop/install-ubuntu-tiger.sh && ln -s /usr/local/lib/nimbix_desktop /usr/lib/JARVICE/tools/nimbix_desktop
+RUN apt-get -y update && \
+    apt-get -y install curl && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/image-common/$GIT_BRANCH/install-nimbix.sh \
+        | bash -s -- --setup-nimbix-desktop --image-common-branch $GIT_BRANCH
 
-# recreate nimbix user home to get the right skeleton files
-RUN /bin/rm -rf /home/nimbix && /sbin/mkhomedir_helper nimbix
+#ADD help.html /etc/NAE/help.html
+ADD AppDef.json /etc/NAE/AppDef.json
+
+#ADD https://raw.githubusercontent.com/nimbix/notebook-common/master/install-ubuntu.sh /tmp/install-ubuntu.sh
+##Tornado >=1.2,<.2.0
+#RUN bash /tmp/install-ubuntu.sh && rm -f /tmp/install-ubuntu.sh
 
 # for standalone use
+EXPOSE 22
 EXPOSE 5901
 EXPOSE 443

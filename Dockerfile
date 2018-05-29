@@ -17,7 +17,7 @@ RUN apt-get -y update && \
 ADD help.html /etc/NAE/help.html
 ADD AppDef.json /etc/NAE/AppDef.json
 
-ENV NB_BRANCH=testing
+ENV NB_BRANCH=master
 ADD https://raw.githubusercontent.com/nimbix/notebook-common/$NB_BRANCH/install-ubuntu.sh /tmp/install-ubuntu.sh
 RUN bash /tmp/install-ubuntu.sh 3 && rm -f /tmp/install-ubuntu.sh
 

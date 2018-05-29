@@ -3,10 +3,10 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180403.160000}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20180528.180000}
 
 ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-testing}
+ENV GIT_BRANCH ${GIT_BRANCH:-master}
 
 RUN apt-get -y update && \
     apt-get -y install curl && \
@@ -19,7 +19,7 @@ ADD AppDef.json /etc/NAE/AppDef.json
 
 ENV NB_BRANCH=testing
 ADD https://raw.githubusercontent.com/nimbix/notebook-common/$NB_BRANCH/install-ubuntu.sh /tmp/install-ubuntu.sh
-RUN bash /tmp/install-ubuntu.sh && rm -f /tmp/install-ubuntu.sh
+RUN bash /tmp/install-ubuntu.sh 3 && rm -f /tmp/install-ubuntu.sh
 
 # Expose port 22 for local JARVICE emulation in docker
 EXPOSE 22

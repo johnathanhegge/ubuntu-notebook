@@ -6,7 +6,8 @@ ARG SERIAL_NUMBER
 ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20190214.120000}
 
 ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-bionic-update}
+#ENV GIT_BRANCH ${GIT_BRANCH:-bionic-update}
+ENV GIT_BRANCH ${GIT_BRANCH:-master}
 
 RUN apt-get -y update && \
     apt-get -y install curl && \

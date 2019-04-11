@@ -5,21 +5,28 @@ LABEL maintainer="Nimbix, Inc."
 ARG SERIAL_NUMBER
 ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20190310.0900}
 
-ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-master}
+#ARG GIT_BRANCH
+#ENV GIT_BRANCH ${GIT_BRANCH:-master}
 
-RUN apt-get -y update && \
-    apt-get -y install curl && \
-    curl -H 'Cache-Control: no-cache' \
-        https://raw.githubusercontent.com/nimbix/image-common/$GIT_BRANCH/install-nimbix.sh \
-        | bash
+##
+#RUN apt-get -y update && \
+#    apt-get -y install curl && \
+#    curl -H 'Cache-Control: no-cache' \
+#        https://raw.githubusercontent.com/nimbix/image-common/$GIT_BRANCH/install-nimbix.sh \
+#        | bash
 
 ARG SERIAL2
-ENV SERIAL2 ${SERIAL2:-20190311.1000}
+ENV SERIAL2 ${SERIAL2:-20190410.1000}
 
-ENV NB_BRANCH=master
-ADD https://raw.githubusercontent.com/nimbix/notebook-common/$NB_BRANCH/install-ubuntu.sh /tmp/install-ubuntu.sh
-RUN bash /tmp/install-ubuntu.sh && rm -f /tmp/install-ubuntu.sh
+ENV BRANCH=conda-test
+
+ADD https://raw.githubusercontent.com/nimbix/notebook-common/${BRANCH:-master}/install-notebook-common /tmp/install-notebook-common
+RUN bash /tmp/install-notebook-common -b "$BRANCH" && rm /tmp/install-notebook-common
+
+# old nb
+#ENV NB_BRANCH=master
+#ADD https://raw.githubusercontent.com/nimbix/notebook-common/$NB_BRANCH/install-ubuntu.sh /tmp/install-ubuntu.sh
+#RUN bash /tmp/install-ubuntu.sh && rm -f /tmp/install-ubuntu.sh
 
 ADD NAE/help.html /etc/NAE/help.html
 ADD NAE/AppDef.json /etc/NAE/AppDef.json

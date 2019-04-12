@@ -3,10 +3,10 @@ LABEL maintainer="Nimbix, Inc."
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20190310.0900}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20190412.0900}
 
 ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-master}
+ENV GIT_BRANCH ${GIT_BRANCH:-testing}
 
 RUN apt-get -y update && \
     apt-get -y install curl && \
@@ -17,9 +17,10 @@ RUN apt-get -y update && \
 ARG SERIAL2
 ENV SERIAL2 ${SERIAL2:-20190311.1000}
 
-ENV NB_BRANCH=testing
-ADD https://raw.githubusercontent.com/nimbix/notebook-common/$NB_BRANCH/install-ubuntu.sh /tmp/install-ubuntu.sh
-RUN bash /tmp/install-ubuntu.sh && rm -f /tmp/install-ubuntu.sh
+ENV BRANCH=conda-test
+
+ADD https://raw.githubusercontent.com/nimbix/notebook-common/${BRANCH:-master}/install-notebook-common /tmp/install-notebook-common
+RUN bash /tmp/install-notebook-common -b "$BRANCH" -3 && rm /tmp/install-notebook-common
 
 ADD NAE/help.html /etc/NAE/help.html
 ADD NAE/AppDef.json /etc/NAE/AppDef.json

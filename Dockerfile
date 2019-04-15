@@ -6,7 +6,7 @@ ARG SERIAL_NUMBER
 ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20190412.0900}
 
 ARG GIT_BRANCH
-ENV GIT_BRANCH ${GIT_BRANCH:-testing}
+ENV GIT_BRANCH ${GIT_BRANCH:-master}
 
 RUN apt-get -y update && \
     apt-get -y install curl && \

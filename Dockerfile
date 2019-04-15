@@ -16,7 +16,7 @@ RUN apt-get -y update && \
         | bash
 
 ARG SERIAL2
-ENV SERIAL2 ${SERIAL2:-20190410.1000}
+ENV SERIAL2 ${SERIAL2:-20190415.1400}
 
 ENV BRANCH=conda-test
 
